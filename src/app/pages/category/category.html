@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h2>Category Management</h2>
+
+  <div class="mb-3 d-flex gap-2">
+    <input [(ngModel)]="newCategory" class="form-control" placeholder="Write the category" />
+    <button class="btn btn-primary" (click)="addCategory()">Add</button>
+  </div>
+
+  <table class="table table-striped table-bordered mt-4 text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories$ | async">
+        <td>{{ category.id }}</td>
+        <td>
+          <a [routerLink]="['/todo', category.id]" class="text-decoration-none">
+            {{ category.name }}
+          </a>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

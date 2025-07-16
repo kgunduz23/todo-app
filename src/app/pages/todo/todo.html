@@ -1,0 +1,75 @@
+<div class="container py-4">
+  <h2 class="text-center mb-4">Todo Management</h2>
+
+  <div class="todo-controls mb-4 d-flex flex-wrap align-items-center gap-2">
+    <select
+      class="form-select w-auto"
+      [value]="(selectedCategoryId$ | async) || ''"
+      (change)="onCategoryChange($any($event.target).value)">
+      <option *ngFor="let category of categories$ | async" [value]="category.id">
+        {{ category.name }}
+      </option>
+    </select>
+
+    <input
+      [(ngModel)]="writeNewTodo"
+      class="form-control w-auto"
+      placeholder="Write a new todo"
+    />
+
+    <button class="btn btn-primary" (click)="addTodo()">Add</button>
+
+    <input
+      class="form-control ms-auto"
+      style="min-width: 200px"
+      placeholder="Search todos..."
+      (input)="onSearchTermChange($any($event.target).value)"
+    />
+  </div>
+
+  <div class="table-responsive shadow rounded">
+    <table class="table table-bordered text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of filteredTodos$ | async">
+          <td>{{ todo.id }}</td>
+          <td>
+            <div *ngIf="editingTodoId !== todo.id" class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="doneTodoIds.has(todo.id)"
+                (change)="toggleDone(todo.id)"
+              />
+              <span [ngClass]="{ 'done-text': doneTodoIds.has(todo.id) }">
+                {{ todo.title }}
+              </span>
+              <button class="btn btn-edit btn-sm" (click)="startEditing(todo)">
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+            </div>
+
+            <div *ngIf="editingTodoId === todo.id" class="d-flex flex-wrap gap-2 mt-2 justify-content-center">
+              <input [(ngModel)]="editedTitle" class="form-control form-control-sm" style="max-width: 250px;" />
+              <button class="btn btn-save btn-sm" (click)="saveEdit(todo.id)">
+                <i class="bi bi-check-lg"></i> Save
+              </button>
+              <button class="btn btn-cancel btn-sm" (click)="cancelEdit()">
+                <i class="bi bi-x-lg"></i> Cancel
+              </button>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteTodo(todo.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

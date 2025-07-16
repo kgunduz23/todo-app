@@ -1,13 +1,19 @@
 import { Routes } from '@angular/router';
-import { CategoryComponent } from './pages/category/category.component';
-import { TodoComponent } from './pages/todo/todo.component';
 
 export const routes: Routes = [
-  { path: 'category', component: CategoryComponent },
-  { path: 'todo', component: TodoComponent },
-  { path: '', redirectTo: 'category', pathMatch: 'full' },
-  { path: 'todo/:categoryId',
-  loadComponent: () => import('./pages/todo/todo.component').then(m => m.TodoComponent)}
-
+  {
+    path: 'todo',
+    loadChildren: () =>
+      import('./pages/todo/todo.routes').then(m => m.todoRoutes)
+  },
+  {
+    path: 'category',
+    loadChildren: () =>
+      import('./pages/category/category.routes').then(m => m.categoryRoutes)
+  },
+  {
+    path: '',
+    redirectTo: 'category',
+    pathMatch: 'full'
+  }
 ];
-

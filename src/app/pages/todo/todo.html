@@ -48,8 +48,10 @@
                 (change)="toggleDone(todo.id)"
               />
               <span [ngClass]="{ 'done-text': doneTodoIds.has(todo.id) }">
-                {{ todo.title }}
+                {{ todo.title }} 
+                <small class="text-muted">({{ todo.categoryId | categoryNameAsync }})</small>
               </span>
+
               <button class="btn btn-edit btn-sm" (click)="startEditing(todo)">
                 <i class="bi bi-pencil-square"></i> Edit
               </button>

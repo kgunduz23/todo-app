@@ -8,12 +8,12 @@ import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, shareReplay  } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
+import { CategoryNameAsyncPipe } from '../pipes/category_name.pipe';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,CategoryNameAsyncPipe],
   templateUrl: './todo.html',
   styleUrl: './todo.scss',
   

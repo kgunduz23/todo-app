@@ -1,4 +1,3 @@
-// src/app/pages/category/category.routes.ts
 import { Routes } from '@angular/router';
 import { CategoryComponent } from './category.component';
 

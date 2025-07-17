@@ -4,9 +4,9 @@
   <div class="todo-controls mb-4 d-flex flex-wrap align-items-center gap-2">
     <select
       class="form-select w-auto"
-      [value]="(selectedCategoryId$ | async) || ''"
-      (change)="onCategoryChange($any($event.target).value)">
-      <option *ngFor="let category of categories$ | async" [value]="category.id">
+      [(ngModel)]="selectedCategoryId"
+      (ngModelChange)="onCategoryChange($event)">
+      <option *ngFor="let category of categories$ | async" [ngValue]="category.id">
         {{ category.name }}
       </option>
     </select>
@@ -38,7 +38,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let todo of filteredTodos$ | async">
-          <td>{{ todo.id }}</td>
+          <td>{{ todo.id | titleUppercase}}</td>
           <td>
             <div *ngIf="editingTodoId !== todo.id" class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
               <input
@@ -48,8 +48,7 @@
                 (change)="toggleDone(todo.id)"
               />
               <span [ngClass]="{ 'done-text': doneTodoIds.has(todo.id) }">
-                {{ todo.title }} 
-                <small class="text-muted">({{ todo.categoryId | categoryNameAsync }})</small>
+                {{ todo.title | titleUppercase }}
               </span>
 
               <button class="btn btn-edit btn-sm" (click)="startEditing(todo)">
